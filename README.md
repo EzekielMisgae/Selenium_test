@@ -1,6 +1,6 @@
 # Selenium Web Navigation Project
 ## Introduction
-This project uses the selenium package for Python to open a website and navigate to 4 different pages of the site. Unit tests have also been written for the code to ensure its functionality. The project has been uploaded to a repository for you to review.
+This project uses the selenium package for Python to open a website of [Gojo Afalagi](https://gojo.herokuapp.com) and navigate to 4 different pages of the site. Unit tests have also been written for the code to ensure its functionality. The project has been uploaded to a repository for you to review.
 
 ## Prerequisites: You will need to have the following installed:
 
@@ -39,8 +39,6 @@ This project uses the selenium package for Python to open a website and navigate
     * ```cd .../Selenium_test``` change directory to the forked folder location
     * ```source seleniumEnv/bin/activate``` activate the virtual environment
     * ```python -m unittest main.py``` to run the test
-## Code
-This code uses the selenium package to open a website of [Gojo Afalagi](https://gojo.herokuapp.com) choice and navigate to 4 different pages.
 
 ## Unit Tests
 The code includes unit tests to ensure that the website is opened and the navigation to different pages is successful. You can run the unit tests using the following command:
