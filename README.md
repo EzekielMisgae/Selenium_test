@@ -31,6 +31,14 @@ This project uses the selenium package for Python to open a website and navigate
 ### A web browser of your choice (e.g. Chrome, Firefox, etc.)
 ### When you are finished using the virtual environment, you can deactivate it using the following command:
 ```deactivate```
+
+## Steps
+- After creating and activating a virtual environment
+- Install all required packages
+- Or you can easily fork my repository then:
+    * ```cd .../Selenium_test``` change directory to the forked folder location
+    * ```source seleniumEnv/bin/activate``` activate the virtual environment
+    * ```python -m unittest main.py``` to run the test
 ## Code
 This code uses the selenium package to open a website of [Gojo Afalagi](https://gojo.herokuapp.com) choice and navigate to 4 different pages.
 
