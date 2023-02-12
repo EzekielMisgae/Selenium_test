@@ -36,9 +36,9 @@ This project uses the selenium package for Python to open a website of [Gojo Afa
 - After creating and activating a virtual environment
 - Install all required packages
 - Or you can easily fork my repository then:
-    * ```cd .../Selenium_test``` change directory to the forked folder location
-    * ```source yourEnv/bin/activate``` activate the virtual environment you have created
-    * ```python -m unittest main.py``` to run the test
+    * ```cd .../Selenium_test``` Change directory to the forked folder location
+    * ```source yourEnv/bin/activate``` Activate the virtual environment you have created
+    * ```python -m unittest main.py``` To run the test, a Chrome browser must be installed.
 
 ## Unit Tests
 The code includes unit tests to ensure that the website is opened and the navigation to different pages is successful. You can run the unit tests using the following command:
