@@ -1,72 +1,77 @@
+import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
+import time
+import tracemalloc
 
-driver = webdriver.Chrome('./chromedriver')
-driver.get("https://gojo.herokuapp.com")
+tracemalloc.start()
 
-wait = WebDriverWait(driver, 10)
-sign_in_button = wait.until(EC.element_to_be_clickable((By.ID, "Sign-in")))
-sign_in_button.click()
+class TestGojoWebsite(unittest.TestCase):
 
-# Login code here
-wait = WebDriverWait(driver, 10)
-username_field = wait.until(EC.presence_of_element_located((By.ID, "username")))
-username_field.send_keys("check")
-password_field = wait.until(EC.presence_of_element_located((By.ID, "password")))
-password_field.send_keys("Pass4321")
-click_sign_in = wait.until(EC.element_to_be_clickable((By.ID, "sign-in")))
-click_sign_in.click()
-# Wait for the About Me button to be visible
-about_me_button = wait.until(EC.element_to_be_clickable((By.ID, "about")))
-about_me_button.click()
+    def setUp(self):
+        self.driver = webdriver.Chrome() #can be elf.driver = webdriver.Chrome() only
+        self.driver.get("http://gojo.herokuapp.com")
+        self.wait = WebDriverWait(self.driver, 10)
+        self.driver.maximize_window()
 
-# Wait for the Home button to be visible
-home_button = wait.until(EC.element_to_be_clickable((By.ID, "home")))
-home_button.click()
+    def test_navigate_to_search(self):
+        self.test_login()
+        # Wait for the search button to be visible
+        search_button = self.wait.until(EC.element_to_be_clickable((By.ID, "search")))
+        search_button.click()
+        time.sleep(1)
+        submit_button = self.wait.until(EC.element_to_be_clickable((By.ID, "submit")))
+        submit_button.click()
+        time.sleep(3)
 
-# Wait for the Sign Out button to be visible
-sign_out_button = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "logout")))
-sign_out_button.click()
+    def test_navigate_to_home(self):
+        self.test_login()
+        search_button = self.wait.until(EC.element_to_be_clickable((By.ID, "profile")))
+        search_button.click()
+        time.sleep(3)
+        home_button = self.wait.until(EC.element_to_be_clickable((By.ID, "home")))
+        home_button.click()
+        time.sleep(3)
 
-driver.close()
+    def test_sign_out(self):
+        self.test_login()
+        time.sleep(2)
+        sign_out_button = self.wait.until(EC.element_to_be_clickable((By.ID, "logout")))
+        sign_out_button.click()
 
+    def test_post_homes(self):
+        time.sleep(5)
+        post_homes_button = self.wait.until(EC.element_to_be_clickable((By.ID, "post_homes")))
+        post_homes_button.click()
+        time.sleep(3)
 
+    def test_login(self):
+        # Login
+        sign_in_button = self.wait.until(EC.element_to_be_clickable((By.ID, "Sign-in")))
+        sign_in_button.click()
 
+        # Login fields
+        username_field = self.wait.until(EC.presence_of_element_located((By.ID, "username")))
+        username_field.send_keys("check")
+        password_field = self.wait.until(EC.presence_of_element_located((By.ID, "password")))
+        password_field.send_keys("Pass4321")
+        click_sign_in = self.wait.until(EC.element_to_be_clickable((By.ID, "sign-in")))
+        click_sign_in.click()
 
+    def tearDown(self):
+        self.driver.close()
 
-# # Wait for 10 seconds
-# time.sleep(10)
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(TestGojoWebsite("test_navigate_to_search"))
+    suite.addTest(TestGojoWebsite("test_navigate_to_home"))
+    suite.addTest(TestGojoWebsite("test_sign_out"))
+    suite.addTest(TestGojoWebsite("test_post_homes"))
+    return suite
 
-# # Login using username and password
-# driver.find_element(By.ID, "sign-in").click()
-# username = driver.find_element(By.ID, "username")
-# password = driver.find_element(By.ID, "password")
-# username.send_keys("check")
-# password.send_keys("check")
-# driver.find_element_by_xpath("//input[@value='Login']").click()
-
-# # Wait for 10 seconds
-# time.sleep(10)
-
-# # Find the text 'About Me' in the navbar and click on it
-# driver.find_element(By.LINK_TEXT, "About Me").click()
-
-# # Wait for 10 seconds
-# time.sleep(10)
-
-# # Find the text 'Home' in the navbar and click on it
-# driver.find_element(By.LINK_TEXT, "Home").click()
-
-# # Wait for 10 seconds
-# time.sleep(10)
-
-# # Find the text 'Sign Out' in the navbar and click on it
-# driver.find_element(By.LINK_TEXT, "Sign Out").click()
-
-# # Wait for 10 seconds
-# time.sleep(10)
-
-# # Close the tab
-# driver.close()
+if __name__ == "__main__":
+    runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(test_suite())
