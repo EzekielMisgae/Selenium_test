@@ -45,6 +45,8 @@ The code includes unit tests to ensure that the website is opened and the naviga
 
 ```python -m unittest main.py```
 
+    - The last test is intended to intentionally demonstrate failure, and will therefore fail.
+
 ## Repository
 The project has been uploaded to a repository for you to fork. You can find the repository at the following link:
 https://github.com/ezekielmisgae/Selenium_test
