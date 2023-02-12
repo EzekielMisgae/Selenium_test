@@ -37,7 +37,7 @@ This project uses the selenium package for Python to open a website of [Gojo Afa
 - Install all required packages
 - Or you can easily fork my repository then:
     * ```cd .../Selenium_test``` change directory to the forked folder location
-    * ```source seleniumEnv/bin/activate``` activate the virtual environment
+    * ```source yourEnv/bin/activate``` activate the virtual environment you have created
     * ```python -m unittest main.py``` to run the test
 
 ## Unit Tests
