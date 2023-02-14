@@ -13,56 +13,54 @@ class TestGojoWebsite(unittest.TestCase):
         self.wait = WebDriverWait(self.driver, 10)
         self.driver.maximize_window()
 
-    def test_navigate_to_search(self):   #Navigates to search page after logging in and clicks search and submit buttons with wait times.
+    def test_navigate_to_search_and_search(self):   #Navigates to search page after logging in and clicks search and submit buttons with wait times.
         self.test_login()
         # Wait for the search button to be visible
         search_button = self.wait.until(EC.element_to_be_clickable((By.ID, "search")))
         search_button.click()
+        self.assertEqual(self.driver.current_url, 'https://gojo.herokuapp.com/search/')
         time.sleep(1)
-        submit_button = self.wait.until(EC.element_to_be_clickable((By.ID, "submit")))
-        submit_button.click()
+        self.wait.until(EC.element_to_be_clickable((By.ID, "submit"))).click()
+        self.assertEqual(self.driver.current_url, 'https://gojo.herokuapp.com/search/')
         time.sleep(3)
 
     def test_navigate_to_home(self):  #Navigates to home page after logging in.
         self.test_login()
-        search_button = self.wait.until(EC.element_to_be_clickable((By.ID, "profile")))
-        search_button.click()
+        self.wait.until(EC.element_to_be_clickable((By.ID, "profile"))).click()
+        self.assertEqual(self.driver.current_url, 'https://gojo.herokuapp.com/profile')
         time.sleep(3)
-        home_button = self.wait.until(EC.element_to_be_clickable((By.ID, "home")))
-        home_button.click()
+        self.wait.until(EC.element_to_be_clickable((By.ID, "home"))).click()
+        self.assertEqual(self.driver.current_url, 'https://gojo.herokuapp.com/homePage')
         time.sleep(3)
 
     def test_sign_out(self): #Test sign-out functionality by logging in, waiting 2 secs, and clicking logout button.
         self.test_login()
         time.sleep(2)
-        sign_out_button = self.wait.until(EC.element_to_be_clickable((By.ID, "logout")))
-        sign_out_button.click()
+        self.wait.until(EC.element_to_be_clickable((By.ID, "logout"))).click()
 
     def test_post_homes(self):  #Code waits for "post_homes" button to be clickable and then clicks it, with waits in between.
-        time.sleep(5)
-        post_homes_button = self.wait.until(EC.element_to_be_clickable((By.ID, "post_homes")))
-        post_homes_button.click()
+        self.test_login()
+        self.wait.until(EC.element_to_be_clickable((By.ID, "post_home"))).click()
+        self.assertEqual(self.driver.current_url, 'https://gojo.herokuapp.com/create/')
         time.sleep(3)
 
     def test_login(self):
         # Login
-        sign_in_button = self.wait.until(EC.element_to_be_clickable((By.ID, "Sign-in")))
-        sign_in_button.click()
+        self.wait.until(EC.element_to_be_clickable((By.ID, "Sign-in"))).click()
 
         # Login fields
-        username_field = self.wait.until(EC.presence_of_element_located((By.ID, "username")))
-        username_field.send_keys("check")
-        password_field = self.wait.until(EC.presence_of_element_located((By.ID, "password")))
-        password_field.send_keys("Pass4321")
-        click_sign_in = self.wait.until(EC.element_to_be_clickable((By.ID, "sign-in")))
-        click_sign_in.click()
+        self.wait.until(EC.presence_of_element_located((By.ID, "username"))).send_keys("check")
+        self.wait.until(EC.presence_of_element_located((By.ID, "password"))).send_keys("Pass4321")
+        self.wait.until(EC.element_to_be_clickable((By.ID, "sign-in"))).click()
+        self.assertEqual(self.driver.current_url, 'https://gojo.herokuapp.com/homePage')
+        time.sleep(2)
 
     def tearDown(self): #Closes each test/func after completion.
         self.driver.close()
 
 def test_suite(): #Creating a test suite for TestGojoWebsite by adding 4 test cases
     suite = unittest.TestSuite()
-    suite.addTest(TestGojoWebsite("test_navigate_to_search"))
+    suite.addTest(TestGojoWebsite("test_navigate_to_search_and_search"))
     suite.addTest(TestGojoWebsite("test_navigate_to_home"))
     suite.addTest(TestGojoWebsite("test_sign_out"))
     suite.addTest(TestGojoWebsite("test_post_homes")) #Fails since there is no element by ID called "post_homes" in the first page.
